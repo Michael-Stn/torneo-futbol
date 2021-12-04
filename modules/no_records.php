@@ -1,0 +1,3 @@
+<p class="txt-center">
+    No se han obtenido resultados...
+</p>

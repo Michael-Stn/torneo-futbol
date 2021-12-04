@@ -1,0 +1,9 @@
+Options -Indexes
+IndexIgnore *
+
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+ErrorDocument 404 /torneo-futbol/index.php?page=404
