@@ -45,24 +45,14 @@ foreach ($results as $r) {
     }
 
     // Partidos por fecha
-    if ($r['np']) {
-        // No se presentó
-        $match = [
-            'local' => $r['equipo_local'],
-            'local_goals' => 0,
-            'visitor' => $r['equipo_visitante'],
-            'visitor_goals' => 0,
-            'hour' => 'NP'
-        ];
-    } else {
-        $match = [
-            'local' => $r['equipo_local'],
-            'local_goals' => $r['goles_local'],
-            'visitor' => $r['equipo_visitante'],
-            'visitor_goals' => $r['goles_visitante'],
-            'hour' => date('H:i', $matchTime)
-        ];
-    }
+    $match = [
+        'local' => $r['equipo_local'],
+        'local_goals' => $r['np'] ? 0 : $r['goles_local'],
+        'visitor' => $r['equipo_visitante'],
+        'visitor_goals' => $r['np'] ? 0 : $r['goles_visitante'],
+        'hour' => date('H:i', $matchTime),
+        'np' => boolval($r['np'])
+    ];
 
     array_push($matchesResults[$r['zona_id']]['journeys'][$r['nro_fecha']]['matches'], $match);
 }

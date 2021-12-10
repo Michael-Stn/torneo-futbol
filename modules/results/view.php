@@ -23,7 +23,7 @@
                         <td class="txt-center"><?= $key + 1 ?></td>
                         <td class="min-w150"><?= $match['local'] ?></td>
                         <td class="txt-center"><?= $match['local_goals'] ?></td>
-                        <td class="txt-center">-</td>
+                        <td class="txt-center"><?= $match['np'] ? 'NP' : '-' ?></td>
                         <td class="txt-center"><?= $match['visitor_goals'] ?></td>
                         <td class="min-w150"><?= $match['visitor'] ?></td>
                         <td class="txt-center"><?= $match['hour'] ?></td>
