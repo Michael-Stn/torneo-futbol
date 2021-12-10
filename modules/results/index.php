@@ -3,11 +3,11 @@
 $conn = new Connection();
 
 $query = '
-    SELECT z.id AS zona_id, z.nombre AS zona_nombre, p.nro_fecha, p.fecha_hora,
+    SELECT z.id AS zona_id, z.nombre AS zona_nombre, p.nro_fecha, p.fecha_hora, p.np,
         e1.nombre AS equipo_local, p.goles_local, e2.nombre AS equipo_visitante, p.goles_visitante
     FROM zonas AS z
         INNER JOIN partidos AS p
-            ON p.id_zona = z.id AND p.eliminado = 0 AND p.jugado = 1
+            ON p.id_zona = z.id AND p.eliminado = 0 AND (p.jugado = 1 OR p.np = 1)
         INNER JOIN equipos AS e1
             ON p.id_local = e1.id AND e1.eliminado = 0
         INNER JOIN equipos AS e2
@@ -45,13 +45,25 @@ foreach ($results as $r) {
     }
 
     // Partidos por fecha
-    $match = [
-        'local' => $r['equipo_local'],
-        'local_goals' => $r['goles_local'],
-        'visitor' => $r['equipo_visitante'],
-        'visitor_goals' => $r['goles_visitante'],
-        'hour' => date('H:i', $matchTime)
-    ];
+    if ($r['np']) {
+        // No se presentó
+        $match = [
+            'local' => $r['equipo_local'],
+            'local_goals' => 0,
+            'visitor' => $r['equipo_visitante'],
+            'visitor_goals' => 0,
+            'hour' => 'NP'
+        ];
+    } else {
+        $match = [
+            'local' => $r['equipo_local'],
+            'local_goals' => $r['goles_local'],
+            'visitor' => $r['equipo_visitante'],
+            'visitor_goals' => $r['goles_visitante'],
+            'hour' => date('H:i', $matchTime)
+        ];
+    }
+
     array_push($matchesResults[$r['zona_id']]['journeys'][$r['nro_fecha']]['matches'], $match);
 }
 
