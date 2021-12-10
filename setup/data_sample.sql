@@ -1,9 +1,9 @@
 -- ZONAS
-INSERT INTO zonas (nombre) 
+INSERT INTO zonas (nombre)
 VALUES ('ZONA A'), ('ZONA B'), ('ZONA C'), ('ZONA D');
 
 -- ARBITROS
-INSERT INTO arbitros (nombre) 
+INSERT INTO arbitros (nombre)
 VALUES ('Francisco La Molina'), ('Juan Bava'), ('Horacio Elizondo'), ('Rodolfo Gonzáles');
 
 -- EQUIPOS
@@ -30,12 +30,12 @@ INSERT INTO partidos (id_zona, id_arbitro, id_local, id_visitante, nro_fecha, go
 (4, 1, 13, 14, 3, 2, 0, '2021-11-05 17:30', 1),
 (4, 1, 15, 16, 4, 1, 1, '2021-12-01 17:30', 1);
 
-INSERT INTO partidos (id_zona, id_arbitro, id_local, id_visitante, nro_fecha, fecha_hora) VALUES
-(1, 4, 1, 2, 1, '2021-12-15 15:30'),
-(1, 4, 3, 4, 1, '2021-12-15 17:30'),
-(2, 3, 5, 6, 1, '2021-12-15 15:30'),
-(2, 3, 7, 8, 1, '2021-12-15 17:30'),
-(3, 2, 9, 10, 2, '2021-12-21 15:30'),
-(3, 2, 11, 12, 2, '2021-12-21 15:30'),
-(4, 1, 13, 14, 2, '2021-12-21 17:30'),
-(4, 1, 15, 16, 2, '2021-12-21 17:30');
+INSERT INTO partidos (id_zona, id_arbitro, id_local, id_visitante, nro_fecha, fecha_hora, np) VALUES
+(1, 4, 1, 2, 1, '2021-12-15 15:30', 1),
+(1, 4, 3, 4, 1, '2021-12-15 17:30', 0),
+(2, 3, 5, 6, 1, '2021-12-15 15:30', 0),
+(2, 3, 7, 8, 1, '2021-12-15 17:30', 0),
+(3, 2, 9, 10, 2, '2021-12-21 15:30', 1),
+(3, 2, 11, 12, 2, '2021-12-21 15:30', 0),
+(4, 1, 13, 14, 2, '2021-12-21 17:30', 0),
+(4, 1, 15, 16, 2, '2021-12-21 17:30', 0);
