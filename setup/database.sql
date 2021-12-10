@@ -46,6 +46,7 @@ CREATE TABLE partidos (
     goles_visitante TINYINT NOT NULL DEFAULT 0,
     fecha_hora DATETIME NOT NULL,
     jugado TINYINT NOT NULL DEFAULT 0,
+    np TINYINT NOT NULL DEFAULT 0,
     eliminado TINYINT NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     FOREIGN KEY (id_zona) REFERENCES zonas(id),

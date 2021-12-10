@@ -59,11 +59,19 @@ function _getZonesWithTeams(Connection $conn): array
  * @param mixed $idTeam ID del equipo
  * @param int $goals Goles a favor
  * @param int $goalsOpp Goles en contra
+ * @param int $np No se presentó
  */
-function _calculate_points(array &$zones, $idZone, $idTeam, int $goals, int $goalsOpp)
+function _calculate_points(array &$zones, $idZone, $idTeam, int $goals, int $goalsOpp, int $np)
 {
     if (!isset($zones[$idZone]['teams'][$idTeam])) return;
     $team = $zones[$idZone]['teams'][$idTeam];
+
+    // Validar si el partido no se presentó
+    if ($np) {
+        $team['np'] += $np;
+        $zones[$idZone]['teams'][$idTeam] = $team;
+        return;
+    }
 
     $team['pj']++;
 
@@ -110,9 +118,9 @@ function _sortPositions(array $zones): array
 $zones = _getZonesWithTeams($conn);
 
 $query = '
-    SELECT id_zona, id_local, id_visitante, goles_local, goles_visitante 
+    SELECT id_zona, id_local, id_visitante, goles_local, goles_visitante, np
     FROM partidos
-    WHERE eliminado = 0 AND jugado = 1;
+    WHERE eliminado = 0 AND (jugado = 1 OR np = 1);
 ';
 $stmt = $conn->query($query);
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -123,8 +131,8 @@ if (!$results) {
 
 foreach ($results as $r) {
     if (!isset($zones[$r['id_zona']])) continue;
-    _calculate_points($zones, $r['id_zona'], $r['id_local'], $r['goles_local'], $r['goles_visitante']);
-    _calculate_points($zones, $r['id_zona'], $r['id_visitante'], $r['goles_visitante'], $r['goles_local']);
+    _calculate_points($zones, $r['id_zona'], $r['id_local'], $r['goles_local'], $r['goles_visitante'], $r['np']);
+    _calculate_points($zones, $r['id_zona'], $r['id_visitante'], $r['goles_visitante'], $r['goles_local'], $r['np']);
 }
 
 $zones = _sortPositions($zones);
