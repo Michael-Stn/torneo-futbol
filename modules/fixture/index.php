@@ -7,7 +7,7 @@ $query = '
         e1.nombre AS equipo_local, e2.nombre AS equipo_visitante, p.fecha_hora
     FROM zonas AS z
         INNER JOIN partidos AS p
-            ON p.id_zona = z.id AND p.eliminado = 0 AND p.jugado = 0
+            ON p.id_zona = z.id AND p.eliminado = 0 AND p.jugado = 0 AND p.np = 0
         INNER JOIN equipos AS e1
             ON p.id_local = e1.id AND e1.eliminado = 0
         INNER JOIN equipos AS e2
